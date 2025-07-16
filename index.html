@@ -38,6 +38,17 @@
       color: #aaa;
     }
 
+    .atencion {
+      background-color: #330;
+      color: #ffcc00;
+      padding: 15px 20px;
+      margin: 20px auto 10px;
+      max-width: 600px;
+      font-size: 1em;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
     h2 {
       margin: 30px 0 10px;
       font-size: 1.5em;
@@ -80,8 +91,8 @@
       margin-left: 15px;
       white-space: normal;
       max-width: 60%;
-      word-wrap: break-word; 
-      text-align: right;       
+      word-wrap: break-word;
+      text-align: right;
     }
 
     .proximamente {
@@ -111,6 +122,10 @@
 
   <div id="clock"></div>
 
+  <div class="atencion">
+    ⚠️ <strong>¡ATENCIÓN!</strong> Si alguno de los links no funciona, cambiá tu DNS en tu teléfono o PC a <code>8.8.8.8</code> y listo, ¡va joya!
+  </div>
+
   <h2>Canales</h2>
 
   <div class="button-container">
@@ -118,15 +133,21 @@
       ESPN
       <span class="partido-en-vivo" id="partido-espn"></span>
     </button>
+
     <button class="canal-btn" id="btn-tnt" onclick="location.href='https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1'">
       TNT
       <span class="partido-en-vivo" id="partido-tnt"></span>
+    </button>
+
+    <button class="canal-btn" id="btn-tyc" onclick="location.href='https://streamtpglobal.com/global1.php?stream=tycsports'">
+      TyC Sports
+      <span class="partido-en-vivo" id="partido-tyc"></span>
     </button>
   </div>
 
   <div class="proximamente">
     <p>📺 Próximamente disponibles:</p>
-    <p><em>TyC Sports, DirecTV Sports, DSports+, ESPN Premium</em></p>
+    <p><em>DirecTV Sports, DSports+</em></p>
   </div>
 
   <script src="partidos.js"></script>
@@ -144,12 +165,11 @@
     function actualizarPartidos() {
       const espnPartido = partidosEnVivo["ESPN"];
       const tntPartido = partidosEnVivo["TNT"];
+      const tycPartido = partidosEnVivo["TyC Sports"];
 
-      const espnSpan = document.getElementById("partido-espn");
-      const tntSpan = document.getElementById("partido-tnt");
-
-      espnSpan.textContent = espnPartido ? `⚽ ${espnPartido}` : "";
-      tntSpan.textContent = tntPartido ? `⚽ ${tntPartido}` : "";
+      document.getElementById("partido-espn").textContent = espnPartido ? `⚽ ${espnPartido}` : "";
+      document.getElementById("partido-tnt").textContent = tntPartido ? `⚽ ${tntPartido}` : "";
+      document.getElementById("partido-tyc").textContent = tycPartido ? `⚽ ${tycPartido}` : "";
     }
 
     setInterval(updateClock, 1000);
