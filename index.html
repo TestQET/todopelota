@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TODOPELOTA.TV</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #fff;
+      text-align: center;
+    }
+
+    header {
+      background-color: #222;
+      padding: 25px 10px;
+      font-size: 1.8em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .emoji {
+      font-size: 1.2em;
+    }
+
+    #clock {
+      font-size: 1.2em;
+      margin: 10px 0;
+      color: #aaa;
+    }
+
+    h2 {
+      margin: 30px 0 10px;
+      font-size: 1.5em;
+      color: #fff;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 0 20px;
+      margin-top: 20px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .canal-btn {
+      background-color: #00aaff;
+      border: none;
+      color: white;
+      padding: 15px;
+      font-size: 1.1em;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .canal-btn:hover {
+      background-color: #0088cc;
+    }
+
+    .partido-en-vivo {
+      font-size: 0.85em;
+      font-style: italic;
+      color: #ff0;
+      margin-left: 15px;
+      white-space: normal;
+      max-width: 60%;
+      word-wrap: break-word; 
+      text-align: right;       
+    }
+
+    .proximamente {
+      margin-top: 40px;
+      font-size: 1em;
+      color: #ccc;
+      padding: 0 20px;
+    }
+
+    @media (min-width: 600px) {
+      h2 {
+        font-size: 2em;
+      }
+      .canal-btn {
+        font-size: 1.3em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="emoji">⚽</span>
+    <strong>TODOPELOTA.TV</strong>
+    <span class="emoji">⚽</span>
+  </header>
+
+  <div id="clock"></div>
+
+  <h2>Canales</h2>
+
+  <div class="button-container">
+    <button class="canal-btn" id="btn-espn" onclick="location.href='https://bestleague.one/cvatt.html?get=Rm94X1Nwb3J0c19QcmVtaXVuX0hE&lang=1'">
+      ESPN
+      <span class="partido-en-vivo" id="partido-espn"></span>
+    </button>
+    <button class="canal-btn" id="btn-tnt" onclick="location.href='https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1'">
+      TNT
+      <span class="partido-en-vivo" id="partido-tnt"></span>
+    </button>
+  </div>
+
+  <div class="proximamente">
+    <p>📺 Próximamente disponibles:</p>
+    <p><em>TyC Sports, DirecTV Sports, DSports+, ESPN Premium</em></p>
+  </div>
+
+  <script src="partidos.js"></script>
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('es-AR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      document.getElementById("clock").textContent = `🕒 ${timeString}`;
+    }
+
+    function actualizarPartidos() {
+      const espnPartido = partidosEnVivo["ESPN"];
+      const tntPartido = partidosEnVivo["TNT"];
+
+      const espnSpan = document.getElementById("partido-espn");
+      const tntSpan = document.getElementById("partido-tnt");
+
+      espnSpan.textContent = espnPartido ? `⚽ ${espnPartido}` : "";
+      tntSpan.textContent = tntPartido ? `⚽ ${tntPartido}` : "";
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+    actualizarPartidos();
+  </script>
+
+</body>
+</html>
