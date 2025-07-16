@@ -150,8 +150,53 @@
     <p><em>DirecTV Sports, DSports+</em></p>
   </div>
 
-  <script src="partidos.js"></script>
   <script>
+    async function obtenerPartidos() {
+      try {
+        const hoy = new Date().toISOString().split('T')[0];
+        const url = `https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${hoy}&l=Argentinian%20Primera%20Division`;
+
+        const respuesta = await fetch(url);
+        const datos = await respuesta.json();
+        const partidos = datos.events;
+
+        if (!partidos) {
+          console.log("No hay partidos para hoy.");
+          return;
+        }
+
+        const canales = {
+          "ESPN": ["Boca", "River", "Newell's", "Lanús"],
+          "TNT": ["Independiente", "Racing", "Vélez", "San Lorenzo"],
+          "TyC Sports": ["Belgrano", "Instituto", "Argentinos", "Barracas"]
+        };
+
+        const partidosEnVivo = {
+          "ESPN": "",
+          "TNT": "",
+          "TyC Sports": ""
+        };
+
+        partidos.forEach(evento => {
+          const nombre = evento.strEvent;
+          const equipos = nombre.toLowerCase();
+
+          for (let canal in canales) {
+            if (canales[canal].some(equipo => equipos.includes(equipo.toLowerCase()))) {
+              partidosEnVivo[canal] = `${nombre} - ${evento.strTime}`;
+            }
+          }
+        });
+
+        document.getElementById("partido-espn").textContent = partidosEnVivo["ESPN"] ? `⚽ ${partidosEnVivo["ESPN"]}` : "";
+        document.getElementById("partido-tnt").textContent = partidosEnVivo["TNT"] ? `⚽ ${partidosEnVivo["TNT"]}` : "";
+        document.getElementById("partido-tyc").textContent = partidosEnVivo["TyC Sports"] ? `⚽ ${partidosEnVivo["TyC Sports"]}` : "";
+
+      } catch (error) {
+        console.error("Error al obtener los partidos:", error);
+      }
+    }
+
     function updateClock() {
       const now = new Date();
       const timeString = now.toLocaleTimeString('es-AR', {
@@ -162,19 +207,9 @@
       document.getElementById("clock").textContent = `🕒 ${timeString}`;
     }
 
-    function actualizarPartidos() {
-      const espnPartido = partidosEnVivo["ESPN"];
-      const tntPartido = partidosEnVivo["TNT"];
-      const tycPartido = partidosEnVivo["TyC Sports"];
-
-      document.getElementById("partido-espn").textContent = espnPartido ? `⚽ ${espnPartido}` : "";
-      document.getElementById("partido-tnt").textContent = tntPartido ? `⚽ ${tntPartido}` : "";
-      document.getElementById("partido-tyc").textContent = tycPartido ? `⚽ ${tycPartido}` : "";
-    }
-
     setInterval(updateClock, 1000);
     updateClock();
-    actualizarPartidos();
+    obtenerPartidos();
   </script>
 
 </body>
