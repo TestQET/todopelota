@@ -76,9 +76,10 @@
       cursor: pointer;
       transition: background 0.3s;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      width: 100%;
+      position: relative;
     }
 
     .canal-btn:hover {
@@ -96,6 +97,35 @@
       text-align: right;
     }
 
+    .dropdown-content {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      background-color: #333;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 10px;
+      animation: fadeDown 0.3s ease-out;
+    }
+
+    .dropdown-content a {
+      background-color: #00aaff;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #0088cc;
+    }
+
+    .flecha {
+      margin-left: 10px;
+      font-size: 0.8em;
+    }
+
     .proximamente {
       margin-top: 40px;
       font-size: 1em;
@@ -103,55 +133,22 @@
       padding: 0 20px;
     }
 
-    .dropdown {
-      position: relative;
-      width: 100%;
-    }
-
-    .dropdown-content {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-      opacity: 0;
-      margin-top: 10px;
-    }
-
-    .dropdown-content.show {
-      max-height: 500px;
-      opacity: 1;
-    }
-
-    .dropdown-content button {
-      background-color: #004466;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      text-align: center;
-      transition: background 0.3s;
-    }
-
-    .dropdown-content button:hover {
-      background-color: #006699;
-    }
-
-    .flecha {
-      transition: transform 0.3s ease;
-      font-size: 1em;
-    }
-
-    .flecha.abierta {
-      transform: rotate(180deg);
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (min-width: 600px) {
       h2 {
         font-size: 2em;
       }
+
       .canal-btn {
         font-size: 1.3em;
       }
@@ -175,31 +172,29 @@
   <h2>Canales</h2>
 
   <div class="button-container">
-    <button class="canal-btn" id="btn-espn" onclick="location.href='https://bestleague.one/cvatt.html?get=Rm94X1Nwb3J0c19QcmVtaXVuX0hE&lang=1'">
-      ESPN
-      <span class="partido-en-vivo" id="partido-espn"></span>
+    <button class="canal-btn" onclick="location.href='https://bestleague.one/cvatt.html?get=Rm94X1Nwb3J0c19QcmVtaXVuX0hE&lang=1'">
+      ESPN <span class="partido-en-vivo" id="partido-espn"></span>
     </button>
 
-    <button class="canal-btn" id="btn-tnt" onclick="location.href='https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1'">
-      TNT
-      <span class="partido-en-vivo" id="partido-tnt"></span>
+    <button class="canal-btn" onclick="location.href='https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1'">
+      TNT <span class="partido-en-vivo" id="partido-tnt"></span>
     </button>
 
-    <button class="canal-btn" id="btn-tyc" onclick="location.href='https://streamtpglobal.com/global1.php?stream=tycsports'">
-      TyC Sports
-      <span class="partido-en-vivo" id="partido-tyc"></span>
+    <button class="canal-btn" onclick="location.href='https://streamtpglobal.com/global1.php?stream=tycsports'">
+      TyC Sports <span class="partido-en-vivo" id="partido-tyc"></span>
     </button>
 
-    <div class="dropdown">
+    <!-- FLOW Dropdown -->
+    <div class="dropdown" style="position: relative;">
       <button class="canal-btn" onclick="toggleDropdown()">
-        Flow
-        <span id="flecha" class="flecha">🔽</span>
+        Flow <span class="flecha">▼</span>
       </button>
-      <div id="dropdown-content" class="dropdown-content">
-        <button onclick="location.href='https://nebunexa.co/temp.html?get=Rmxvd19NdXNpY19YUA==&lang=1'">Flow Música X</button>
-        <button onclick="location.href='https://nebunexa.co/temp.html?get=RXZlbnRvc18yX0hE&lang=1'">EventOS 2 HD</button>
+      <div class="dropdown-content" id="dropdown-content">
+        <a href="https://nebunexa.co/temp.html?get=Rmxvd19NdXNpY19YUA==&lang=1" target="_blank">Link 1</a>
+        <a href="https://nebunexa.co/temp.html?get=RXZlbnRvc18yX0hE&lang=1" target="_blank">Link 2</a>
       </div>
     </div>
+
   </div>
 
   <div class="proximamente">
@@ -212,15 +207,11 @@
       try {
         const hoy = new Date().toISOString().split('T')[0];
         const url = `https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${hoy}&l=Argentinian%20Primera%20Division`;
-
         const respuesta = await fetch(url);
         const datos = await respuesta.json();
         const partidos = datos.events;
 
-        if (!partidos) {
-          console.log("No hay partidos para hoy.");
-          return;
-        }
+        if (!partidos) return;
 
         const canales = {
           "ESPN": ["Boca", "River", "Newell's", "Lanús"],
@@ -228,16 +219,11 @@
           "TyC Sports": ["Belgrano", "Instituto", "Argentinos", "Barracas"]
         };
 
-        const partidosEnVivo = {
-          "ESPN": "",
-          "TNT": "",
-          "TyC Sports": ""
-        };
+        const partidosEnVivo = { "ESPN": "", "TNT": "", "TyC Sports": "" };
 
         partidos.forEach(evento => {
           const nombre = evento.strEvent;
           const equipos = nombre.toLowerCase();
-
           for (let canal in canales) {
             if (canales[canal].some(equipo => equipos.includes(equipo.toLowerCase()))) {
               partidosEnVivo[canal] = `${nombre} - ${evento.strTime}`;
@@ -266,27 +252,22 @@
 
     function toggleDropdown() {
       const dropdown = document.getElementById("dropdown-content");
-      const flecha = document.getElementById("flecha");
-
-      dropdown.classList.toggle("show");
-      flecha.classList.toggle("abierta");
+      dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
     }
 
-    document.addEventListener("click", function(event) {
+    // Cerrar menú si se hace clic fuera o en una opción
+    document.addEventListener("click", function (event) {
       const dropdown = document.getElementById("dropdown-content");
       const button = document.querySelector(".dropdown > button");
-      const flecha = document.getElementById("flecha");
 
       if (!dropdown.contains(event.target) && !button.contains(event.target)) {
-        dropdown.classList.remove("show");
-        flecha.classList.remove("abierta");
+        dropdown.style.display = "none";
       }
     });
 
-    document.querySelectorAll(".dropdown-content button").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.getElementById("dropdown-content").classList.remove("show");
-        document.getElementById("flecha").classList.remove("abierta");
+    document.querySelectorAll(".dropdown-content a").forEach(link => {
+      link.addEventListener("click", () => {
+        document.getElementById("dropdown-content").style.display = "none";
       });
     });
 
