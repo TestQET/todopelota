@@ -76,8 +76,9 @@
       cursor: pointer;
       transition: background 0.3s;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+      gap: 10px;
     }
 
     .canal-btn:hover {
@@ -100,6 +101,51 @@
       font-size: 1em;
       color: #ccc;
       padding: 0 20px;
+    }
+
+    .dropdown {
+      position: relative;
+      width: 100%;
+    }
+
+    .dropdown-content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+      opacity: 0;
+      margin-top: 10px;
+    }
+
+    .dropdown-content.show {
+      max-height: 500px;
+      opacity: 1;
+    }
+
+    .dropdown-content button {
+      background-color: #004466;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.3s;
+    }
+
+    .dropdown-content button:hover {
+      background-color: #006699;
+    }
+
+    .flecha {
+      transition: transform 0.3s ease;
+      font-size: 1em;
+    }
+
+    .flecha.abierta {
+      transform: rotate(180deg);
     }
 
     @media (min-width: 600px) {
@@ -143,6 +189,17 @@
       TyC Sports
       <span class="partido-en-vivo" id="partido-tyc"></span>
     </button>
+
+    <div class="dropdown">
+      <button class="canal-btn" onclick="toggleDropdown()">
+        Flow
+        <span id="flecha" class="flecha">🔽</span>
+      </button>
+      <div id="dropdown-content" class="dropdown-content">
+        <button onclick="location.href='https://nebunexa.co/temp.html?get=Rmxvd19NdXNpY19YUA==&lang=1'">Flow Música X</button>
+        <button onclick="location.href='https://nebunexa.co/temp.html?get=RXZlbnRvc18yX0hE&lang=1'">EventOS 2 HD</button>
+      </div>
+    </div>
   </div>
 
   <div class="proximamente">
@@ -206,6 +263,32 @@
       });
       document.getElementById("clock").textContent = `🕒 ${timeString}`;
     }
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById("dropdown-content");
+      const flecha = document.getElementById("flecha");
+
+      dropdown.classList.toggle("show");
+      flecha.classList.toggle("abierta");
+    }
+
+    document.addEventListener("click", function(event) {
+      const dropdown = document.getElementById("dropdown-content");
+      const button = document.querySelector(".dropdown > button");
+      const flecha = document.getElementById("flecha");
+
+      if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+        dropdown.classList.remove("show");
+        flecha.classList.remove("abierta");
+      }
+    });
+
+    document.querySelectorAll(".dropdown-content button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.getElementById("dropdown-content").classList.remove("show");
+        document.getElementById("flecha").classList.remove("abierta");
+      });
+    });
 
     setInterval(updateClock, 1000);
     updateClock();
