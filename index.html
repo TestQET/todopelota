@@ -176,6 +176,19 @@
       ESPN <span class="partido-en-vivo" id="partido-espn"></span>
     </button>
 
+   <!-- DIRECTV Dropdown -->
+   <div class="dropdown" style="position: relative;">
+     <button class="canal-btn" onclick="toggleDropdown('directv-dropdown')">
+       DirecTV <span class="flecha">▼</span>
+     </button>
+     <div class="dropdown-content" id="directv-dropdown">
+        <a href="https://streamtpglobal.com/global1.php?stream=dsports" target="_blank">Dsports 1</a>
+        <a href="https://la14hd.com/vivo/canales.php?stream=dsports2" target="_blank">Dsports 2</a>
+     </div>
+   </div>
+
+     
+
     <button class="canal-btn" onclick="location.href='https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1'">
       TNT <span class="partido-en-vivo" id="partido-tnt"></span>
     </button>
@@ -183,6 +196,7 @@
     <button class="canal-btn" onclick="location.href='https://streamtpglobal.com/global1.php?stream=tycsports'">
       TyC Sports <span class="partido-en-vivo" id="partido-tyc"></span>
     </button>
+  
 
     <!-- FLOW Dropdown -->
     <div class="dropdown" style="position: relative;">
@@ -250,26 +264,37 @@
       document.getElementById("clock").textContent = `🕒 ${timeString}`;
     }
 
-    function toggleDropdown() {
-      const dropdown = document.getElementById("dropdown-content");
-      dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
-    }
+    function toggleDropdown(id) {
+   const allDropdowns = document.querySelectorAll(".dropdown-content");
+   allDropdowns.forEach(d => {
+    if (d.id !== id) d.style.display = "none";
+  });
+
+  const dropdown = document.getElementById(id);
+  dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+}
+
 
     // Cerrar menú si se hace clic fuera o en una opción
     document.addEventListener("click", function (event) {
-      const dropdown = document.getElementById("dropdown-content");
-      const button = document.querySelector(".dropdown > button");
+  const allDropdowns = document.querySelectorAll(".dropdown-content");
+  const allButtons = document.querySelectorAll(".dropdown > button");
 
-      if (!dropdown.contains(event.target) && !button.contains(event.target)) {
-        dropdown.style.display = "none";
-      }
-    });
+  let clickedInsideDropdown = false;
 
-    document.querySelectorAll(".dropdown-content a").forEach(link => {
-      link.addEventListener("click", () => {
-        document.getElementById("dropdown-content").style.display = "none";
-      });
-    });
+  allDropdowns.forEach(d => {
+    if (d.contains(event.target)) clickedInsideDropdown = true;
+  });
+
+  allButtons.forEach(b => {
+    if (b.contains(event.target)) clickedInsideDropdown = true;
+  });
+
+  if (!clickedInsideDropdown) {
+    allDropdowns.forEach(d => d.style.display = "none");
+  }
+});
+
 
     setInterval(updateClock, 1000);
     updateClock();
