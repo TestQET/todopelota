@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TODOPELOTA.TV</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -28,9 +26,7 @@
       gap: 10px;
     }
 
-    .emoji {
-      font-size: 1.2em;
-    }
+    .emoji { font-size: 1.2em; }
 
     #clock {
       font-size: 1.2em;
@@ -82,9 +78,7 @@
       position: relative;
     }
 
-    .canal-btn:hover {
-      background-color: #0088cc;
-    }
+    .canal-btn:hover { background-color: #0088cc; }
 
     .partido-en-vivo {
       font-size: 0.85em;
@@ -134,24 +128,13 @@
     }
 
     @keyframes fadeDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (min-width: 600px) {
-      h2 {
-        font-size: 2em;
-      }
-
-      .canal-btn {
-        font-size: 1.3em;
-      }
+      h2 { font-size: 2em; }
+      .canal-btn { font-size: 1.3em; }
     }
   </style>
 </head>
@@ -172,43 +155,48 @@
   <h2>Canales</h2>
 
   <div class="button-container">
-    <button class="canal-btn" onclick="location.href='https://bestleague.one/cvatt.html?get=Rm94X1Nwb3J0c19QcmVtaXVuX0hE&lang=1'">
-      ESPN <span class="partido-en-vivo" id="partido-espn"></span>
-    </button>
 
-   <!-- DIRECTV Dropdown -->
-   <div class="dropdown" style="position: relative;">
-     <button class="canal-btn" onclick="toggleDropdown('directv-dropdown')">
-       DirecTV <span class="flecha">▼</span>
-     </button>
-     <div class="dropdown-content" id="directv-dropdown">
-        <a href="https://streamtpglobal.com/global1.php?stream=dsports" target="_blank">Dsports 1</a>
-        <a href="https://la14hd.com/vivo/canales.php?stream=dsports2" target="_blank">Dsports 2</a>
-     </div>
-   </div>
-
-     
-
-    <button class="canal-btn" onclick="location.href='https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1'">
-      TNT <span class="partido-en-vivo" id="partido-tnt"></span>
-    </button>
-
-    <button class="canal-btn" onclick="location.href='https://streamtpglobal.com/global1.php?stream=tycsports'">
-      TyC Sports <span class="partido-en-vivo" id="partido-tyc"></span>
-    </button>
-  
-
-    <!-- FLOW Dropdown -->
-    <div class="dropdown" style="position: relative;">
-      <button class="canal-btn" onclick="toggleDropdown()">
-        Flow <span class="flecha">▼</span>
-      </button>
-      <div class="dropdown-content" id="dropdown-content">
-        <a href="https://nebunexa.co/temp.html?get=Rmxvd19NdXNpY19YUA==&lang=1" target="_blank">Link 1</a>
-        <a href="https://nebunexa.co/temp.html?get=RXZlbnRvc18yX0hE&lang=1" target="_blank">Link 2</a>
+    <!-- ESPN Dropdown -->
+    <div class="dropdown">
+      <button class="canal-btn" onclick="toggleDropdown('espn-dropdown')">ESPN <span class="flecha">▼</span> <span class="partido-en-vivo" id="partido-espn"></span></button>
+      <div class="dropdown-content" id="espn-dropdown">
+        <a href="https://bestleague.one/cvatt.html?get=Rm94X1Nwb3J0c19QcmVtaXVuX0hE&lang=1" target="_blank">Opción 1</a>
+        <a href="https://streamtpglobal.com/global1.php?stream=espnpremium" target="_blank">Opción 2</a>
+        <a href="https://la14hd.com/vivo/canales.php?stream=espnpremium" target="_blank">Opción 3</a>
+        <a href="https://streamtpglobal.com/global1.php?stream=espnplus1" target="_blank">Opción 4</a>
       </div>
     </div>
 
+    <!-- TNT Dropdown -->
+    <div class="dropdown">
+      <button class="canal-btn" onclick="toggleDropdown('tnt-dropdown')">TNT <span class="flecha">▼</span> <span class="partido-en-vivo" id="partido-tnt"></span></button>
+      <div class="dropdown-content" id="tnt-dropdown">
+        <a href="https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1" target="_blank">Opción 1</a>
+        <a href="https://la14hd.com/vivo/canales.php?stream=tntsports" target="_blank">Opción 2</a>
+        <a href="https://streamtpglobal.com/global1.php?stream=tntsports" target="_blank">Opción 3</a>
+      </div>
+    </div>
+
+    <!-- TyC Sports -->
+    <button class="canal-btn" onclick="location.href='https://streamtpglobal.com/global1.php?stream=tycsports'">TyC Sports <span class="partido-en-vivo" id="partido-tyc"></span></button>
+
+    <!-- Flow Dropdown -->
+    <div class="dropdown">
+      <button class="canal-btn" onclick="toggleDropdown('flow-dropdown')">Flow <span class="flecha">▼</span></button>
+      <div class="dropdown-content" id="flow-dropdown">
+        <a href="https://nebunexa.co/temp.html?get=Rmxvd19NdXNpY19YUA==&lang=1" target="_blank">Flow Música X</a>
+        <a href="https://nebunexa.co/temp.html?get=RXZlbnRvc18yX0hE&lang=1" target="_blank">EventOS 2 HD</a>
+      </div>
+    </div>
+
+    <!-- DirecTV Dropdown -->
+    <div class="dropdown">
+      <button class="canal-btn" onclick="toggleDropdown('directv-dropdown')">DirecTV <span class="flecha">▼</span></button>
+      <div class="dropdown-content" id="directv-dropdown">
+        <a href="https://streamtpglobal.com/global1.php?stream=dsports" target="_blank">Dsports 1</a>
+        <a href="https://la14hd.com/vivo/canales.php?stream=dsports2" target="_blank">Dsports 2</a>
+      </div>
+    </div>
   </div>
 
   <div class="proximamente">
@@ -265,36 +253,27 @@
     }
 
     function toggleDropdown(id) {
-   const allDropdowns = document.querySelectorAll(".dropdown-content");
-   allDropdowns.forEach(d => {
-    if (d.id !== id) d.style.display = "none";
-  });
+      const allDropdowns = document.querySelectorAll(".dropdown-content");
+      allDropdowns.forEach(d => {
+        if (d.id !== id) d.style.display = "none";
+      });
 
-  const dropdown = document.getElementById(id);
-  dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
-}
+      const dropdown = document.getElementById(id);
+      dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    }
 
-
-    // Cerrar menú si se hace clic fuera o en una opción
     document.addEventListener("click", function (event) {
-  const allDropdowns = document.querySelectorAll(".dropdown-content");
-  const allButtons = document.querySelectorAll(".dropdown > button");
+      const allDropdowns = document.querySelectorAll(".dropdown-content");
+      const allButtons = document.querySelectorAll(".dropdown > button");
 
-  let clickedInsideDropdown = false;
+      let clickedInside = false;
+      allDropdowns.forEach(d => { if (d.contains(event.target)) clickedInside = true; });
+      allButtons.forEach(b => { if (b.contains(event.target)) clickedInside = true; });
 
-  allDropdowns.forEach(d => {
-    if (d.contains(event.target)) clickedInsideDropdown = true;
-  });
-
-  allButtons.forEach(b => {
-    if (b.contains(event.target)) clickedInsideDropdown = true;
-  });
-
-  if (!clickedInsideDropdown) {
-    allDropdowns.forEach(d => d.style.display = "none");
-  }
-});
-
+      if (!clickedInside) {
+        allDropdowns.forEach(d => d.style.display = "none");
+      }
+    });
 
     setInterval(updateClock, 1000);
     updateClock();
