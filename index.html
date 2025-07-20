@@ -2,139 +2,21 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TODOPELOTA.TV</title>
   <style>
-    * { box-sizing: border-box; }
-
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #111;
-      color: #fff;
-      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
     }
 
     header {
-      background-color: #222;
-      padding: 25px 10px;
-      font-size: 1.8em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .emoji { font-size: 1.2em; }
-
-    #clock {
-      font-size: 1.2em;
-      margin: 10px 0;
-      color: #aaa;
-    }
-
-    .atencion {
-      background-color: #330;
-      color: #ffcc00;
-      padding: 15px 20px;
-      margin: 20px auto 10px;
-      max-width: 600px;
-      font-size: 1em;
-      border-radius: 10px;
-      font-weight: bold;
-    }
-
-    h2 {
-      margin: 30px 0 10px;
-      font-size: 1.5em;
-      color: #fff;
-    }
-
-    .button-container {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      padding: 0 20px;
-      margin-top: 20px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .canal-btn {
-      background-color: #00aaff;
-      border: none;
-      color: white;
-      padding: 15px;
-      font-size: 1.1em;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background 0.3s;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      position: relative;
-    }
-
-    .canal-btn:hover { background-color: #0088cc; }
-
-    .partido-en-vivo {
-      font-size: 0.85em;
-      font-style: italic;
-      color: #ff0;
-      margin-left: 15px;
-      white-space: normal;
-      max-width: 60%;
-      word-wrap: break-word;
-      text-align: right;
-    }
-
-    .dropdown-content {
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      background-color: #333;
-      border-radius: 10px;
-      padding: 10px;
-      margin-top: 10px;
-      animation: fadeDown 0.3s ease-out;
-    }
-
-    .dropdown-content a {
-      background-color: #00aaff;
-      color: white;
-      padding: 10px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #0088cc;
-    }
-
-    .flecha {
-      margin-left: 10px;
-      font-size: 0.8em;
-    }
-
-    .proximamente {
-      margin-top: 40px;
-      font-size: 1em;
-      color: #ccc;
-      padding: 0 20px;
-    }
-
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (min-width: 600px) {
-      h2 { font-size: 2em; }
-      .canal-btn { font-size: 1.3em; }
+      text-align: center;
+      background-color: #1a1a1a;
+      padding: 20px;
+      font-size: 24px;
     }
 
     .sidebar-toggle {
@@ -200,74 +82,13 @@
 </head>
 <body>
 
-  <header>
-    <span class="emoji">⚽</span>
-    <strong>TODOPELOTA.TV</strong>
-    <span class="emoji">⚽</span>
-  </header>
-
-  <div id="clock"></div>
-
-  <div class="atencion">
-    ⚠️ <strong>¡ATENCIÓN!</strong> Si alguno de los links no funciona, cambiá tu DNS en tu teléfono o PC a <code>8.8.8.8</code> y listo, ¡va joya!
-  </div>
-
-  <h2>Canales</h2>
-
-  <div class="button-container">
-
-    <!-- ESPN Dropdown -->
-    <div class="dropdown">
-      <button class="canal-btn" onclick="toggleDropdown('espn-dropdown')">ESPN <span class="flecha">▼</span> <span class="partido-en-vivo" id="partido-espn"></span></button>
-      <div class="dropdown-content" id="espn-dropdown">
-        <a href="https://bestleague.one/cvatt.html?get=Rm94X1Nwb3J0c19QcmVtaXVuX0hE&lang=1" target="_blank">Opción 1</a>
-        <a href="https://streamtpglobal.com/global1.php?stream=espnpremium" target="_blank">Opción 2</a>
-        <a href="https://la14hd.com/vivo/canales.php?stream=espnpremium" target="_blank">Opción 3</a>
-        <a href="https://streamtpglobal.com/global1.php?stream=espnplus1" target="_blank">Opción 4</a>
-      </div>
-    </div>
-
-    <!-- TNT Dropdown -->
-    <div class="dropdown">
-      <button class="canal-btn" onclick="toggleDropdown('tnt-dropdown')">TNT <span class="flecha">▼</span> <span class="partido-en-vivo" id="partido-tnt"></span></button>
-      <div class="dropdown-content" id="tnt-dropdown">
-        <a href="https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1" target="_blank">Opción 1</a>
-        <a href="https://la14hd.com/vivo/canales.php?stream=tntsports" target="_blank">Opción 2</a>
-        <a href="https://streamtpglobal.com/global1.php?stream=tntsports" target="_blank">Opción 3</a>
-      </div>
-    </div>
-
-    <!-- TyC Sports -->
-    <button class="canal-btn" onclick="location.href='https://streamtpglobal.com/global1.php?stream=tycsports'">TyC Sports <span class="partido-en-vivo" id="partido-tyc"></span></button>
-
-    <!-- Flow Dropdown -->
-    <div class="dropdown">
-      <button class="canal-btn" onclick="toggleDropdown('flow-dropdown')">Flow <span class="flecha">▼</span></button>
-      <div class="dropdown-content" id="flow-dropdown">
-        <a href="https://nebunexa.co/temp.html?get=Rmxvd19NdXNpY19YUA==&lang=1" target="_blank">Flow Música X</a>
-        <a href="https://nebunexa.co/temp.html?get=RXZlbnRvc18yX0hE&lang=1" target="_blank">EventOS 2 HD</a>
-      </div>
-    </div>
-
-    <!-- DirecTV Dropdown -->
-    <div class="dropdown">
-      <button class="canal-btn" onclick="toggleDropdown('directv-dropdown')">DirecTV <span class="flecha">▼</span></button>
-      <div class="dropdown-content" id="directv-dropdown">
-        <a href="https://streamtpglobal.com/global1.php?stream=dsports" target="_blank">Dsports 1</a>
-        <a href="https://la14hd.com/vivo/canales.php?stream=dsports2" target="_blank">Dsports 2</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="proximamente">
-    <p>📺 Próximamente disponibles:</p>
-    <p><em>DirecTV Sports, DSports+</em></p>
-  </div>
+  <header>⚽ TODOPELOTA.TV ⚽</header>
 
   <button class="sidebar-toggle" onclick="toggleSidebar()">🗂️ Partidos</button>
+
   <div class="sidebar" id="sidebar">
     <h3>📅 Partidos de Hoy</h3>
-    <div id="torneos-container"></div>
+    <div id="torneos-container">Cargando...</div>
   </div>
 
   <script>
@@ -275,112 +96,63 @@
       document.getElementById("sidebar").classList.toggle("open");
     }
 
-    async function cargarPartidosTorneosArgentinos() {
-      try {
-        const hoy = new Date().toISOString().split('T')[0];
-        const urls = [
-          `https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${hoy}&l=Argentinian%20Primera%20Division`,
-          `https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${hoy}&l=Copa%20Argentina`,
-          `https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${hoy}&l=Superliga%20Argentina`
-        ];
+    const ligas = [
+      { id: "4406", name: "Liga Profesional" },
+      { id: "5428", name: "Copa de la Liga Profesional" }
+    ];
 
-        const nombresTorneos = [
-          "Argentinian Primera Division",
-          "Copa Argentina",
-          "Superliga Argentina"
-        ];
+    async function cargarPartidos() {
+      const hoy = new Date().toISOString().split("T")[0];
+      const torneos = {};
 
-        const torneos = {
-          "Argentinian Primera Division": [],
-          "Copa Argentina": [],
-          "Superliga Argentina": []
-        };
+      await Promise.all(ligas.map(async liga => {
+        const url = `https://www.thesportsdb.com/api/v1/json/1/eventsnextleague.php?id=${liga.id}`;
+        const res = await fetch(url).then(r => r.json());
+        const events = res.events || [];
 
-        const resultados = await Promise.all(urls.map(url => fetch(url).then(res => res.json())));
+        const hoyEvents = events.filter(ev => ev.dateEvent === hoy)
+          .map(ev => ({
+            nombre: ev.strEvent,
+            hora: ev.strTime,
+            golesLocal: ev.intHomeScore,
+            golesVisitante: ev.intAwayScore
+          }));
 
-        resultados.forEach((res, i) => {
-          if (res.events) {
-            torneos[nombresTorneos[i]] = res.events.map(ev => ({
-              nombre: ev.strEvent,
-              hora: ev.strTime,
-              golesLocal: ev.intHomeScore,
-              golesVisitante: ev.intAwayScore
-            }));
-          }
+        torneos[liga.name] = hoyEvents;
+      }));
+
+      const container = document.getElementById("torneos-container");
+      container.innerHTML = "";
+
+      Object.entries(torneos).forEach(([torneo, partidos]) => {
+        if (partidos.length === 0) return;
+
+        const div = document.createElement("div");
+        div.className = "torneo";
+
+        const title = document.createElement("h4");
+        title.textContent = "🏆 " + torneo;
+        div.appendChild(title);
+
+        partidos.forEach(p => {
+          const partido = document.createElement("div");
+          partido.className = "partido";
+
+          const goles = (p.golesLocal !== null && p.golesVisitante !== null)
+            ? ` (${p.golesLocal} - ${p.golesVisitante})`
+            : "";
+
+          partido.textContent = `${p.nombre}${goles} - ${p.hora}`;
+          div.appendChild(partido);
         });
 
-        const container = document.getElementById("torneos-container");
-        container.innerHTML = "";
-
-        Object.entries(torneos).forEach(([torneo, partidos]) => {
-          if (partidos.length === 0) return;
-
-          const div = document.createElement("div");
-          div.className = "torneo";
-
-          const title = document.createElement("h4");
-          title.textContent = "🏆 " + torneo;
-          div.appendChild(title);
-
-          partidos.forEach(p => {
-            const partido = document.createElement("div");
-            partido.className = "partido";
-
-            const goles = (p.golesLocal !== null && p.golesVisitante !== null)
-              ? ` (${p.golesLocal} - ${p.golesVisitante})`
-              : "";
-
-            partido.textContent = `${p.nombre}${goles} - ${p.hora}`;
-            div.appendChild(partido);
-          });
-
-          container.appendChild(div);
-        });
-
-      } catch (e) {
-        console.error("Error cargando partidos:", e);
-      }
-    }
-
-    function updateClock() {
-      const now = new Date();
-      const timeString = now.toLocaleTimeString('es-AR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
+        container.appendChild(div);
       });
-      document.getElementById("clock").textContent = `🕒 ${timeString}`;
     }
 
-    function toggleDropdown(id) {
-      const allDropdowns = document.querySelectorAll(".dropdown-content");
-      allDropdowns.forEach(d => {
-        if (d.id !== id) d.style.display = "none";
-      });
-
-      const dropdown = document.getElementById(id);
-      dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
-    }
-
-    document.addEventListener("click", function (event) {
-      const allDropdowns = document.querySelectorAll(".dropdown-content");
-      const allButtons = document.querySelectorAll(".dropdown > button");
-
-      let clickedInside = false;
-      allDropdowns.forEach(d => { if (d.contains(event.target)) clickedInside = true; });
-      allButtons.forEach(b => { if (b.contains(event.target)) clickedInside = true; });
-
-      if (!clickedInside) {
-        allDropdowns.forEach(d => d.style.display = "none");
-      }
-    });
-
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    cargarPartidosTorneosArgentinos();
-    setInterval(cargarPartidosTorneosArgentinos, 20 * 60 * 1000);
+    // Cargar al iniciar y cada 20 minutos
+    cargarPartidos();
+    setInterval(cargarPartidos, 20 * 60 * 1000);
   </script>
-
 </body>
 </html>
