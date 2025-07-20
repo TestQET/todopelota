@@ -96,31 +96,33 @@
       document.getElementById("sidebar").classList.toggle("open");
     }
 
-    const ligas = [
-      { id: "4406", name: "Liga Profesional" },
-      { id: "5428", name: "Copa de la Liga Profesional" }
-    ];
-
     async function cargarPartidos() {
       const hoy = new Date().toISOString().split("T")[0];
       const torneos = {};
 
-      await Promise.all(ligas.map(async liga => {
-        const url = `https://www.thesportsdb.com/api/v1/json/1/eventsnextleague.php?id=${liga.id}`;
-        const res = await fetch(url).then(r => r.json());
-        const events = res.events || [];
-
-        const hoyEvents = events.filter(ev => ev.dateEvent === hoy)
-          .map(ev => ({
-            nombre: ev.strEvent,
-            hora: ev.strTime,
-            golesLocal: ev.intHomeScore,
-            golesVisitante: ev.intAwayScore
-          }));
-
-        torneos[liga.name] = hoyEvents;
+      // Liga Profesional
+      const res1 = await fetch(`https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${hoy}&l=Argentinian%20Primera%20Division`)
+        .then(r => r.json());
+      torneos["Liga Profesional"] = (res1.events || []).map(ev => ({
+        nombre: ev.strEvent,
+        hora: ev.strTime,
+        golesLocal: ev.intHomeScore,
+        golesVisitante: ev.intAwayScore
       }));
 
+      // Copa de la Liga (filtrar partidos de hoy)
+      const res2 = await fetch(`https://www.thesportsdb.com/api/v1/json/1/eventsnextleague.php?id=5428`)
+        .then(r => r.json());
+      torneos["Copa de la Liga Profesional"] = (res2.events || [])
+        .filter(ev => ev.dateEvent === hoy)
+        .map(ev => ({
+          nombre: ev.strEvent,
+          hora: ev.strTime,
+          golesLocal: ev.intHomeScore,
+          golesVisitante: ev.intAwayScore
+        }));
+
+      // Mostrar resultados
       const container = document.getElementById("torneos-container");
       container.innerHTML = "";
 
@@ -138,7 +140,7 @@
           const partido = document.createElement("div");
           partido.className = "partido";
 
-          const goles = (p.golesLocal !== null && p.golesVisitante !== null)
+          const goles = (p.golesLocal != null && p.golesVisitante != null)
             ? ` (${p.golesLocal} - ${p.golesVisitante})`
             : "";
 
