@@ -136,6 +136,66 @@
       h2 { font-size: 2em; }
       .canal-btn { font-size: 1.3em; }
     }
+
+    .sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #00aaff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-size: 0.9em;
+      z-index: 1001;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 100vh;
+      background-color: #1a1a1a;
+      color: white;
+      overflow-y: auto;
+      padding: 20px;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+      z-index: 1000;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
+      font-size: 1.2em;
+      border-bottom: 1px solid #444;
+      padding-bottom: 5px;
+    }
+
+    .sidebar .torneo {
+      margin-bottom: 20px;
+    }
+
+    .sidebar .partido {
+      font-size: 0.95em;
+      margin: 5px 0;
+      color: #ddd;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0%);
+      }
+
+      .sidebar-toggle {
+        display: block;
+      }
+    }
   </style>
 </head>
 <body>
@@ -204,41 +264,81 @@
     <p><em>DirecTV Sports, DSports+</em></p>
   </div>
 
+  <button class="sidebar-toggle" onclick="toggleSidebar()">🗂️ Partidos</button>
+  <div class="sidebar" id="sidebar">
+    <h3>📅 Partidos de Hoy</h3>
+    <div id="torneos-container"></div>
+  </div>
+
   <script>
-    async function obtenerPartidos() {
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("open");
+    }
+
+    async function cargarPartidosTorneosArgentinos() {
       try {
         const hoy = new Date().toISOString().split('T')[0];
-        const url = `https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${hoy}&l=Argentinian%20Primera%20Division`;
-        const respuesta = await fetch(url);
-        const datos = await respuesta.json();
-        const partidos = datos.events;
+        const urls = [
+          `https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${hoy}&l=Argentinian%20Primera%20Division`,
+          `https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${hoy}&l=Copa%20Argentina`,
+          `https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${hoy}&l=Superliga%20Argentina`
+        ];
 
-        if (!partidos) return;
+        const nombresTorneos = [
+          "Argentinian Primera Division",
+          "Copa Argentina",
+          "Superliga Argentina"
+        ];
 
-        const canales = {
-          "ESPN": ["Boca", "River", "Newell's", "Lanús"],
-          "TNT": ["Independiente", "Racing", "Vélez", "San Lorenzo"],
-          "TyC Sports": ["Belgrano", "Instituto", "Argentinos", "Barracas"]
+        const torneos = {
+          "Argentinian Primera Division": [],
+          "Copa Argentina": [],
+          "Superliga Argentina": []
         };
 
-        const partidosEnVivo = { "ESPN": "", "TNT": "", "TyC Sports": "" };
+        const resultados = await Promise.all(urls.map(url => fetch(url).then(res => res.json())));
 
-        partidos.forEach(evento => {
-          const nombre = evento.strEvent;
-          const equipos = nombre.toLowerCase();
-          for (let canal in canales) {
-            if (canales[canal].some(equipo => equipos.includes(equipo.toLowerCase()))) {
-              partidosEnVivo[canal] = `${nombre} - ${evento.strTime}`;
-            }
+        resultados.forEach((res, i) => {
+          if (res.events) {
+            torneos[nombresTorneos[i]] = res.events.map(ev => ({
+              nombre: ev.strEvent,
+              hora: ev.strTime,
+              golesLocal: ev.intHomeScore,
+              golesVisitante: ev.intAwayScore
+            }));
           }
         });
 
-        document.getElementById("partido-espn").textContent = partidosEnVivo["ESPN"] ? `⚽ ${partidosEnVivo["ESPN"]}` : "";
-        document.getElementById("partido-tnt").textContent = partidosEnVivo["TNT"] ? `⚽ ${partidosEnVivo["TNT"]}` : "";
-        document.getElementById("partido-tyc").textContent = partidosEnVivo["TyC Sports"] ? `⚽ ${partidosEnVivo["TyC Sports"]}` : "";
+        const container = document.getElementById("torneos-container");
+        container.innerHTML = "";
 
-      } catch (error) {
-        console.error("Error al obtener los partidos:", error);
+        Object.entries(torneos).forEach(([torneo, partidos]) => {
+          if (partidos.length === 0) return;
+
+          const div = document.createElement("div");
+          div.className = "torneo";
+
+          const title = document.createElement("h4");
+          title.textContent = "🏆 " + torneo;
+          div.appendChild(title);
+
+          partidos.forEach(p => {
+            const partido = document.createElement("div");
+            partido.className = "partido";
+
+            const goles = (p.golesLocal !== null && p.golesVisitante !== null)
+              ? ` (${p.golesLocal} - ${p.golesVisitante})`
+              : "";
+
+            partido.textContent = `${p.nombre}${goles} - ${p.hora}`;
+            div.appendChild(partido);
+          });
+
+          container.appendChild(div);
+        });
+
+      } catch (e) {
+        console.error("Error cargando partidos:", e);
       }
     }
 
@@ -277,7 +377,9 @@
 
     setInterval(updateClock, 1000);
     updateClock();
-    obtenerPartidos();
+
+    cargarPartidosTorneosArgentinos();
+    setInterval(cargarPartidosTorneosArgentinos, 20 * 60 * 1000);
   </script>
 
 </body>
