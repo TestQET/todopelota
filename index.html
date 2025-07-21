@@ -109,6 +109,7 @@
       border-radius: 8px;
       text-decoration: none;
       transition: background 0.3s;
+      display: block;
     }
 
     .dropdown-content a:hover {
@@ -125,6 +126,61 @@
       font-size: 1em;
       color: #ccc;
       padding: 0 20px;
+    }
+
+    /* ===== Player / Embed Area ===== */
+    #player-wrapper {
+      margin: 40px auto;
+      max-width: 960px;
+      width: 100%;
+      padding: 0 10px;
+      display: none; /* hidden until a stream is selected */
+    }
+
+    #player-header {
+      margin-bottom: 10px;
+      font-size: 1.1em;
+      color: #ffcc00;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #player-header a.external-link {
+      font-size: 0.85em;
+      padding: 4px 8px;
+      background:#00aaff;
+      border-radius:6px;
+      text-decoration:none;
+      color:#fff;
+    }
+    #player-header a.external-link:hover{background:#0088cc;}
+
+    .player-aspect {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      background:#000;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    #player-iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .player-error {
+      display:none;
+      margin-top:15px;
+      color:#f66;
+      font-size:0.95em;
     }
 
     @keyframes fadeDown {
@@ -160,10 +216,10 @@
     <div class="dropdown">
       <button class="canal-btn" onclick="toggleDropdown('espn-dropdown')">ESPN <span class="flecha">▼</span> <span class="partido-en-vivo" id="partido-espn"></span></button>
       <div class="dropdown-content" id="espn-dropdown">
-        <a href="https://bestleague.one/cvatt.html?get=Rm94X1Nwb3J0c19QcmVtaXVuX0hE&lang=1" target="_blank">Opción 1</a>
-        <a href="https://streamtpglobal.com/global1.php?stream=espnpremium" target="_blank">Opción 2</a>
-        <a href="https://la14hd.com/vivo/canales.php?stream=espnpremium" target="_blank">Opción 3</a>
-        <a href="https://streamtpglobal.com/global1.php?stream=espnplus1" target="_blank">Opción 4</a>
+        <a href="https://bestleague.one/cvatt.html?get=Rm94X1Nwb3J0c19QcmVtaXVuX0hE&lang=1" data-label="ESPN • Opción 1" target="_blank">Opción 1</a>
+        <a href="https://streamtpglobal.com/global1.php?stream=espnpremium" data-label="ESPN • Opción 2" target="_blank">Opción 2</a>
+        <a href="https://la14hd.com/vivo/canales.php?stream=espnpremium" data-label="ESPN • Opción 3" target="_blank">Opción 3</a>
+        <a href="https://streamtpglobal.com/global1.php?stream=espnplus1" data-label="ESPN • Opción 4" target="_blank">Opción 4</a>
       </div>
     </div>
 
@@ -171,21 +227,21 @@
     <div class="dropdown">
       <button class="canal-btn" onclick="toggleDropdown('tnt-dropdown')">TNT <span class="flecha">▼</span> <span class="partido-en-vivo" id="partido-tnt"></span></button>
       <div class="dropdown-content" id="tnt-dropdown">
-        <a href="https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1" target="_blank">Opción 1</a>
-        <a href="https://la14hd.com/vivo/canales.php?stream=tntsports" target="_blank">Opción 2</a>
-        <a href="https://streamtpglobal.com/global1.php?stream=tntsports" target="_blank">Opción 3</a>
+        <a href="https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1" data-label="TNT • Opción 1" target="_blank">Opción 1</a>
+        <a href="https://la14hd.com/vivo/canales.php?stream=tntsports" data-label="TNT • Opción 2" target="_blank">Opción 2</a>
+        <a href="https://streamtpglobal.com/global1.php?stream=tntsports" data-label="TNT • Opción 3" target="_blank">Opción 3</a>
       </div>
     </div>
 
-    <!-- TyC Sports -->
-    <button class="canal-btn" onclick="location.href='https://streamtpglobal.com/global1.php?stream=tycsports'">TyC Sports <span class="partido-en-vivo" id="partido-tyc"></span></button>
+    <!-- TyC Sports (single link) -->
+    <button class="canal-btn" data-embed="https://streamtpglobal.com/global1.php?stream=tycsports" data-label="TyC Sports" id="tyc-btn">TyC Sports <span class="partido-en-vivo" id="partido-tyc"></span></button>
 
     <!-- Flow Dropdown -->
     <div class="dropdown">
       <button class="canal-btn" onclick="toggleDropdown('flow-dropdown')">Flow <span class="flecha">▼</span></button>
       <div class="dropdown-content" id="flow-dropdown">
-        <a href="https://nebunexa.co/temp.html?get=Rmxvd19NdXNpY19YUA==&lang=1" target="_blank">Flow Música X</a>
-        <a href="https://nebunexa.co/temp.html?get=RXZlbnRvc18yX0hE&lang=1" target="_blank">EventOS 2 HD</a>
+        <a href="https://nebunexa.co/temp.html?get=Rmxvd19NdXNpY19YUA==&lang=1" data-label="Flow Música X" target="_blank">Flow Música X</a>
+        <a href="https://nebunexa.co/temp.html?get=RXZlbnRvc18yX0hE&lang=1" data-label="EventOS 2 HD" target="_blank">EventOS 2 HD</a>
       </div>
     </div>
 
@@ -193,10 +249,22 @@
     <div class="dropdown">
       <button class="canal-btn" onclick="toggleDropdown('directv-dropdown')">DirecTV <span class="flecha">▼</span></button>
       <div class="dropdown-content" id="directv-dropdown">
-        <a href="https://streamtpglobal.com/global1.php?stream=dsports" target="_blank">Dsports 1</a>
-        <a href="https://la14hd.com/vivo/canales.php?stream=dsports2" target="_blank">Dsports 2</a>
+        <a href="https://streamtpglobal.com/global1.php?stream=dsports" data-label="Dsports 1" target="_blank">Dsports 1</a>
+        <a href="https://la14hd.com/vivo/canales.php?stream=dsports2" data-label="Dsports 2" target="_blank">Dsports 2</a>
       </div>
     </div>
+  </div>
+
+  <!-- Player / Embed Area -->
+  <div id="player-wrapper">
+    <div id="player-header">
+      <span id="player-title">Reproduciendo…</span>
+      <!-- external link injected here when a stream is loaded -->
+    </div>
+    <div class="player-aspect">
+      <iframe id="player-iframe" allowfullscreen referrerpolicy="no-referrer"></iframe>
+    </div>
+    <div class="player-error" id="player-error">El sitio remoto no permite ser embebido (bloqueo X-Frame-Options / CSP). Usá el botón "Abrir en ventana nueva".</div>
   </div>
 
   <div class="proximamente">
@@ -205,6 +273,112 @@
   </div>
 
   <script>
+    /* =============================
+       Reloj en vivo
+    ============================== */
+    function updateClock() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('es-AR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      document.getElementById("clock").textContent = `🕒 ${timeString}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    /* =============================
+       Dropdowns
+    ============================== */
+    function toggleDropdown(id) {
+      const allDropdowns = document.querySelectorAll(".dropdown-content");
+      allDropdowns.forEach(d => {
+        if (d.id !== id) d.style.display = "none";
+      });
+      const dropdown = document.getElementById(id);
+      dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    }
+
+    document.addEventListener("click", function (event) {
+      const allDropdowns = document.querySelectorAll(".dropdown-content");
+      const allButtons = document.querySelectorAll(".dropdown > button");
+      let clickedInside = false;
+      allDropdowns.forEach(d => { if (d.contains(event.target)) clickedInside = true; });
+      allButtons.forEach(b => { if (b.contains(event.target)) clickedInside = true; });
+      if (!clickedInside) {
+        allDropdowns.forEach(d => d.style.display = "none");
+      }
+    });
+
+    /* =============================
+       Embed player loader
+       - We try to load the stream URL in an iframe.
+       - If it fails due to X-Frame-Options/CSP, user can open externally.
+    ============================== */
+    function loadStream(url, label) {
+      const wrapper = document.getElementById('player-wrapper');
+      const iframe = document.getElementById('player-iframe');
+      const title = document.getElementById('player-title');
+      const errorBox = document.getElementById('player-error');
+      const header = document.getElementById('player-header');
+
+      // Reset error state
+      errorBox.style.display = 'none';
+
+      // Update title
+      title.textContent = label || 'Reproduciendo…';
+
+      // Inject / refresh external-open link
+      let externalLink = header.querySelector('a.external-link');
+      if (!externalLink) {
+        externalLink = document.createElement('a');
+        externalLink.className = 'external-link';
+        externalLink.textContent = 'Abrir en ventana nueva';
+        externalLink.target = '_blank';
+        header.appendChild(externalLink);
+      }
+      externalLink.href = url;
+
+      // Show wrapper
+      wrapper.style.display = 'block';
+
+      // Load iframe SRC
+      iframe.src = url;
+
+      /* We cannot directly detect X-Frame-Options reliably cross-origin.
+         Heurística: esperar un pequeño tiempo y chequear si iframe.contentWindow 
+         es accesible (no lo será cross-origin) — pero eso no indica bloqueo.
+         Por eso mostramos error solo si recibimos evento 'error' de la etiqueta <iframe>.
+      */
+      iframe.addEventListener('error', () => {
+        errorBox.style.display = 'block';
+      }, { once: true });
+    }
+
+    /* Convert all dropdown links to embed-on-click (plus preserve external) */
+    function wireDropdownEmbeds() {
+      document.querySelectorAll('.dropdown-content a').forEach(a => {
+        a.addEventListener('click', evt => {
+          evt.preventDefault();
+          const url = a.href;
+          const label = a.dataset.label || a.textContent.trim();
+          loadStream(url, label);
+        });
+      });
+    }
+
+    /* TyC single button direct-embed */
+    function wireSingleButtons() {
+      const tyc = document.getElementById('tyc-btn');
+      tyc.addEventListener('click', () => {
+        loadStream(tyc.dataset.embed, tyc.dataset.label || 'TyC Sports');
+      });
+    }
+
+    /* =============================
+       Partidos en vivo via TheSportsDB
+    ============================== */
     async function obtenerPartidos() {
       try {
         const hoy = new Date().toISOString().split('T')[0];
@@ -212,7 +386,6 @@
         const respuesta = await fetch(url);
         const datos = await respuesta.json();
         const partidos = datos.events;
-
         if (!partidos) return;
 
         const canales = {
@@ -242,42 +415,12 @@
       }
     }
 
-    function updateClock() {
-      const now = new Date();
-      const timeString = now.toLocaleTimeString('es-AR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
-      document.getElementById("clock").textContent = `🕒 ${timeString}`;
-    }
-
-    function toggleDropdown(id) {
-      const allDropdowns = document.querySelectorAll(".dropdown-content");
-      allDropdowns.forEach(d => {
-        if (d.id !== id) d.style.display = "none";
-      });
-
-      const dropdown = document.getElementById(id);
-      dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
-    }
-
-    document.addEventListener("click", function (event) {
-      const allDropdowns = document.querySelectorAll(".dropdown-content");
-      const allButtons = document.querySelectorAll(".dropdown > button");
-
-      let clickedInside = false;
-      allDropdowns.forEach(d => { if (d.contains(event.target)) clickedInside = true; });
-      allButtons.forEach(b => { if (b.contains(event.target)) clickedInside = true; });
-
-      if (!clickedInside) {
-        allDropdowns.forEach(d => d.style.display = "none");
-      }
+    // Init once DOM loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      wireDropdownEmbeds();
+      wireSingleButtons();
+      obtenerPartidos();
     });
-
-    setInterval(updateClock, 1000);
-    updateClock();
-    obtenerPartidos();
   </script>
 
 </body>
