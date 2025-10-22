@@ -5,72 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TODOPELOTA.TV</title>
   <style>
-    * { box-sizing: border-box; }
+    /* --- INICIO DEL NUEVO CSS MINIMALISTA --- */
 
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #111;
-      color: #fff;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #121212;
+      color: #E0E0E0;
       text-align: center;
+      line-height: 1.6;
     }
 
     header {
-      background-color: #222;
-      padding: 25px 10px;
-      font-size: 1.8em;
+      background-color: #1B1B1B;
+      padding: 20px 10px;
+      font-size: 1.6em;
+      font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
+      border-bottom: 1px solid #2a2a2a;
+      width: 100%;
     }
 
-    .emoji { font-size: 1.2em; }
+    .emoji {
+      font-size: 1.1em;
+    }
+
+    /* Contenedor principal para centrar el contenido */
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
     #clock {
-      font-size: 1.2em;
-      margin: 10px 0;
-      color: #aaa;
+      font-size: 1.1em;
+      margin: 25px 0;
+      color: #888;
     }
 
     .atencion {
-      background-color: #330;
-      color: #ffcc00;
-      padding: 15px 20px;
-      margin: 20px auto 10px;
-      max-width: 600px;
-      font-size: 1em;
-      border-radius: 10px;
-      font-weight: bold;
+      background-color: #1E1E1E;
+      color: #E0E0E0;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 0.95em;
+      border-radius: 8px;
+      font-weight: 500;
+      text-align: left;
+      border: 1px solid #333;
+      border-left: 4px solid #e9ab0c; /* Borde de acento en lugar de fondo */
+    }
+
+    .atencion strong {
+      color: #e9ab0c;
+    }
+
+    .atencion code {
+      background-color: #333;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
     }
 
     h2 {
-      margin: 30px 0 10px;
-      font-size: 1.5em;
+      margin: 40px 0 20px;
+      font-size: 1.8em;
       color: #fff;
+      font-weight: 600;
     }
 
     .button-container {
       display: flex;
       flex-direction: column;
       gap: 15px;
-      padding: 0 20px;
-      margin-top: 20px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
+      width: 100%;
     }
 
     .canal-btn {
-      background-color: #00aaff;
-      border: none;
-      color: white;
-      padding: 15px;
+      background-color: #222;
+      border: 1px solid #333;
+      color: #E0E0E0;
+      padding: 16px;
       font-size: 1.1em;
-      border-radius: 12px;
+      font-weight: 500;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background-color 0.2s, border-color 0.2s;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -78,12 +111,15 @@
       position: relative;
     }
 
-    .canal-btn:hover { background-color: #0088cc; }
+    .canal-btn:hover {
+      background-color: #2a2a2a;
+      border-color: #444;
+    }
 
     .partido-en-vivo {
       font-size: 0.85em;
       font-style: italic;
-      color: #ff0;
+      color: #888; /* Color secundario, no amarillo brillante */
       margin-left: 15px;
       white-space: normal;
       max-width: 60%;
@@ -94,48 +130,54 @@
     .dropdown-content {
       display: none;
       flex-direction: column;
-      gap: 10px;
-      background-color: #333;
-      border-radius: 10px;
+      gap: 8px;
+      background-color: #1E1E1E;
+      border: 1px solid #333;
+      border-radius: 8px;
       padding: 10px;
-      margin-top: 10px;
-      animation: fadeDown 0.3s ease-out;
+      margin-top: 8px;
+      animation: fadeDown 0.2s ease-out;
     }
 
     .dropdown-content a {
-      background-color: #00aaff;
-      color: white;
-      padding: 10px;
-      border-radius: 8px;
+      background-color: transparent;
+      color: #E0E0E0;
+      padding: 12px 10px;
+      border-radius: 6px;
       text-decoration: none;
-      transition: background 0.3s;
+      transition: background 0.2s;
+      text-align: center;
+      font-weight: 500;
     }
 
     .dropdown-content a:hover {
-      background-color: #0088cc;
+      background-color: #333;
     }
 
     .flecha {
       margin-left: 10px;
       font-size: 0.8em;
+      color: #888;
     }
 
     .proximamente {
       margin-top: 40px;
       font-size: 1em;
-      color: #ccc;
-      padding: 0 20px;
+      color: #888;
+      padding-bottom: 40px; /* Espacio al final */
     }
 
     @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-10px); }
+      from { opacity: 0; transform: translateY(-5px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     @media (min-width: 600px) {
       h2 { font-size: 2em; }
-      .canal-btn { font-size: 1.3em; }
+      .canal-btn { font-size: 1.2em; }
     }
+
+    /* --- FIN DEL NUEVO CSS --- */
   </style>
 </head>
 <body>
@@ -146,65 +188,59 @@
     <span class="emoji">⚽</span>
   </header>
 
-  <div id="clock"></div>
+  <main class="container">
 
-  <div class="atencion">
-    ⚠️ <strong>¡ATENCIÓN!</strong> Si alguno de los links no funciona, cambiá tu DNS en tu teléfono o PC a <code>8.8.8.8</code> y listo, ¡va joya!
-  </div>
+    <div id="clock"></div>
 
-  <h2>Canales</h2>
+    <div class="atencion">
+      ⚠️ <strong>¡ATENCIÓN!</strong> Si alguno de los links no funciona, cambiá tu DNS en tu teléfono o PC a <code>8.8.8.8</code> y listo, ¡va joya!
+    </div>
 
-  <div class="button-container">
+    <h2>Canales</h2>
 
-    <!-- ESPN Dropdown -->
-    <div class="dropdown">
-      <button class="canal-btn" onclick="toggleDropdown('espn-dropdown')">ESPN <span class="flecha">▼</span> <span class="partido-en-vivo" id="partido-espn"></span></button>
-      <div class="dropdown-content" id="espn-dropdown">
-        <a href="https://bestleague.one/cvatt.html?get=Rm94X1Nwb3J0c19QcmVtaXVuX0hE&lang=1" target="_blank">Opción 1</a>
-        <a href="https://streamtpglobal.com/global1.php?stream=espnpremium" target="_blank">Opción 2</a>
-        <a href="https://la14hd.com/vivo/canales.php?stream=espnpremium" target="_blank">Opción 3</a>
-        <a href="https://streamtpglobal.com/global1.php?stream=espnplus1" target="_blank">Opción 4</a>
+    <div class="button-container">
+
+      <div class="dropdown">
+        <button class="canal-btn" onclick="toggleDropdown('espn-dropdown')">ESPN <span class="flecha">▼</span> <span class="partido-en-vivo" id="partido-espn"></span></button>
+        <div class="dropdown-content" id="espn-dropdown">
+          <a href="https://bestleague.one/cvatt.html?get=Rm94X1Nwb3J0c19QcmVtaXVuX0hE&lang=1" target="_blank">Opción 1</a>
+          <a href="https://streamtpglobal.com/global1.php?stream=espnpremium" target="_blank">Opción 2</a>
+          <a href="https://la14hd.com/vivo/canales.php?stream=espnpremium" target="_blank">Opción 3</a>
+          <a href="https://streamtpglobal.com/global1.php?stream=espnplus1" target="_blank">Opción 4</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="canal-btn" onclick="toggleDropdown('tnt-dropdown')">TNT <span class="flecha">▼</span> <span class="partido-en-vivo" id="partido-tnt"></span></button>
+        <div class="dropdown-content" id="tnt-dropdown">
+          <a href="https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1" target="_blank">Opción 1</a>
+          <a href="https://la14hd.com/vivo/canales.php?stream=tntsports" target="_blank">Opción 2</a>
+          <a href="https://streamtpglobal.com/global1.php?stream=tntsports" target="_blank">Opción 3</a>
+        </div>
+      </div>
+
+      <button class="canal-btn" onclick="location.href='https://streamtpglobal.com/global1.php?stream=tycsports'">TyC Sports <span class="partido-en-vivo" id="partido-tyc"></span></button>
+
+      <div class="dropdown">
+        <button class="canal-btn" onclick="toggleDropdown('flow-dropdown')">Flow <span class="flecha">▼</span></button>
+        <div class="dropdown-content" id="flow-dropdown">
+          <a href="https://nebunexa.co/temp.html?get=Rmxvd19NdXNpY19YUA==&lang=1" target="_blank">Flow Música X</a>
+          <a href="https://nebunexa.co/temp.html?get=RXZlbnRvc18yX0hE&lang=1" target="_blank">EventOS 2 HD</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="canal-btn" onclick="toggleDropdown('directv-dropdown')">DirecTV <span class="flecha">▼</span></button>
+        <div class="dropdown-content" id="directv-dropdown">
+          <a href="https://streamtpglobal.com/global1.php?stream=dsports" target="_blank">Dsports 1</a>
+          <a href="https://la14hd.com/vivo/canales.php?stream=dsports2" target="_blank">Dsports 2</a>
+        </div>
       </div>
     </div>
 
-    <!-- TNT Dropdown -->
-    <div class="dropdown">
-      <button class="canal-btn" onclick="toggleDropdown('tnt-dropdown')">TNT <span class="flecha">▼</span> <span class="partido-en-vivo" id="partido-tnt"></span></button>
-      <div class="dropdown-content" id="tnt-dropdown">
-        <a href="https://bestleague.one/cvatt.html?get=VE5UX1Nwb3J0c19IRA&lang=1" target="_blank">Opción 1</a>
-        <a href="https://la14hd.com/vivo/canales.php?stream=tntsports" target="_blank">Opción 2</a>
-        <a href="https://streamtpglobal.com/global1.php?stream=tntsports" target="_blank">Opción 3</a>
-      </div>
-    </div>
 
-    <!-- TyC Sports -->
-    <button class="canal-btn" onclick="location.href='https://streamtpglobal.com/global1.php?stream=tycsports'">TyC Sports <span class="partido-en-vivo" id="partido-tyc"></span></button>
-
-    <!-- Flow Dropdown -->
-    <div class="dropdown">
-      <button class="canal-btn" onclick="toggleDropdown('flow-dropdown')">Flow <span class="flecha">▼</span></button>
-      <div class="dropdown-content" id="flow-dropdown">
-        <a href="https://nebunexa.co/temp.html?get=Rmxvd19NdXNpY19YUA==&lang=1" target="_blank">Flow Música X</a>
-        <a href="https://nebunexa.co/temp.html?get=RXZlbnRvc18yX0hE&lang=1" target="_blank">EventOS 2 HD</a>
-      </div>
-    </div>
-
-    <!-- DirecTV Dropdown -->
-    <div class="dropdown">
-      <button class="canal-btn" onclick="toggleDropdown('directv-dropdown')">DirecTV <span class="flecha">▼</span></button>
-      <div class="dropdown-content" id="directv-dropdown">
-        <a href="https://streamtpglobal.com/global1.php?stream=dsports" target="_blank">Dsports 1</a>
-        <a href="https://la14hd.com/vivo/canales.php?stream=dsports2" target="_blank">Dsports 2</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="proximamente">
-    <p>📺 Próximamente disponibles:</p>
-    <p><em>DirecTV Sports, DSports+</em></p>
-  </div>
-
-  <script>
+  </main> <script>
+    // --- TU JAVASCRIPT ORIGINAL (sin cambios) ---
     async function obtenerPartidos() {
       try {
         const hoy = new Date().toISOString().split('T')[0];
